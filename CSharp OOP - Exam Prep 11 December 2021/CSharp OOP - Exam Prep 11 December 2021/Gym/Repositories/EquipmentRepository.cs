@@ -1,0 +1,34 @@
+﻿using Gym.Models.Equipments.Contracts;
+using Gym.Repositories.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Gym.Repositories
+{
+    public class EquipmentRepository : IRepository<IEquipment>
+    {
+        private ICollection<IEquipment> equipments;
+        public EquipmentRepository()
+        {
+            equipments = new List<IEquipment>();
+        }
+        public IReadOnlyCollection<IEquipment> Models => (IReadOnlyCollection<IEquipment>)equipments;
+
+        public void Add(IEquipment model)
+        {
+           equipments.Add(model);
+        }
+
+        public IEquipment FindByType(string type)
+        {
+            return equipments.FirstOrDefault(e => e.GetType().Name == type);
+        }
+
+        public bool Remove(IEquipment model)
+        {
+            return equipments.Remove(model);
+        }
+    }
+}
